@@ -1,4 +1,3 @@
-// api/index.js
 const jsonServer = require('json-server')
 const server = jsonServer.create()
 const router = jsonServer.router('/db.json') // The path to your database file
@@ -15,10 +14,5 @@ server.use((req, res, next) => {
 })
 server.use(router)
 
-module.exports = (req, res) => {
-  server(req, res, (result) => {
-    if (result instanceof Error) {
-      return res.status(500).json({ message: result.message })
-    }
-  })
-}
+// Export your server instance directly
+module.exports = server
