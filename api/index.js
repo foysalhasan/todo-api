@@ -14,5 +14,12 @@ server.use((req, res, next) => {
 })
 server.use(router)
 
-// Export your server instance directly
-module.exports = server
+// Create a function to handle requests
+module.exports = (req, res) => {
+  server(req, res, (result) => {
+    if (result instanceof Error) {
+      return res.status(500).json({ message: result.message })
+    }
+    res.status(result.statusCode).send(result.body)
+  })
+}
